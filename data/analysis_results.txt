@@ -1,0 +1,45 @@
+=== Корреляционный анализ ===
+Матрица корреляции:
+                            Среднее время игры (мин)  Доля положительных  Цена (руб)  Владельцы (приблизительно)  Оценка Metacritic
+Среднее время игры (мин)                    1.000000           -0.231368   -0.563832                         NaN           0.047077
+Доля положительных                         -0.231368            1.000000    0.741910                         NaN           0.309749
+Цена (руб)                                 -0.563832            0.741910    1.000000                         NaN          -0.324617
+Владельцы (приблизительно)                       NaN                 NaN         NaN                         NaN                NaN
+Оценка Metacritic                           0.047077            0.309749   -0.324617                         NaN           1.000000
+
+Коэффициент корреляции Пирсона: -0.231
+Коэффициент корреляции Спирмена: -0.400
+
+=== Регрессионный анализ ===
+Зависимая переменная: Среднее время игры (мин)
+Независимые переменные: Доля положительных, Цена (руб), Владельцы (приблизительно), Оценка Metacritic
+
+                               OLS Regression Results                               
+====================================================================================
+Dep. Variable:     Среднее время игры (мин)   R-squared:                       1.000
+Model:                                  OLS   Adj. R-squared:                    nan
+Method:                       Least Squares   F-statistic:                       nan
+Date:                      Tue, 27 May 2025   Prob (F-statistic):                nan
+Time:                              19:05:10   Log-Likelihood:                 91.402
+No. Observations:                         4   AIC:                            -174.8
+Df Residuals:                             0   BIC:                            -177.3
+Df Model:                                 3                                         
+Covariance Type:                  nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const       1.677e+04        inf          0        nan         nan         nan
+x1          3.606e+04        inf          0        nan         nan         nan
+x2           -4.3e+04        inf         -0        nan         nan         nan
+x3                  0        nan        nan        nan         nan         nan
+x4         -2.444e+04        inf         -0        nan         nan         nan
+==============================================================================
+Omnibus:                          nan   Durbin-Watson:                   0.948
+Prob(Omnibus):                    nan   Jarque-Bera (JB):                0.398
+Skew:                          -0.570   Prob(JB):                        0.820
+Kurtosis:                       1.957   Cond. No.                         6.09
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The input rank is higher than the number of observations.
