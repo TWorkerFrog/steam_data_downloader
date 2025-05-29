@@ -150,8 +150,8 @@ def parse_game_data(appid, name):
             game_data.update({
                 'Положительные отзывы': steamspy_data.get('positive', 0),
                 'Отрицательные отзывы': steamspy_data.get('negative', 0),
-                'Среднее время игры (мин)': steamspy_data.get('average_forever', 0),
-                'Медианное время игры (мин)': steamspy_data.get('median_forever', 0),
+                'Среднее время игры (ч)': round(steamspy_data.get('average_forever', 0) / 60, 2),
+                'Медианное время игры (ч)': round(steamspy_data.get('median_forever', 0) / 60, 2),
                 'Steam рейтинг': f"{get_steam_rating(appid)}%" if get_steam_rating(appid) else 'Н/Д'
             })
 

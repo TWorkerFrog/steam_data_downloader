@@ -6,6 +6,11 @@ import statsmodels.api as sm
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
+from stats_utils import (
+    calculate_descriptive_stats,
+    calculate_correlations,
+    run_regression_analysis
+)
 
 # Настройки отображения
 pd.set_option("display.max_columns", 100)
@@ -47,21 +52,10 @@ def analyze_data(filename):
         desc_stats = numeric_df.describe()
         
         # 2. Корреляционный анализ
-        corr_matrix = numeric_df.corr()
-        pearson_corr, pearson_p = stats.pearsonr(numeric_df['Среднее время игры (мин)'], 
-                                                numeric_df['Доля положительных'])
-        spearman_corr, spearman_p = stats.spearmanr(numeric_df['Среднее время игры (мин)'], 
-                                                  numeric_df['Доля положительных'])
-        
-        # 3. Регрессионный анализ
-        X_cols = [col for col in ['Доля положительных', 'Цена (руб)', 'Оценка Metacritic'] 
-                 if col in numeric_df.columns]
-        X = numeric_df[X_cols]
-        X = StandardScaler().fit_transform(X)
-        X = sm.add_constant(X)
-        y = numeric_df['Среднее время игры (мин)']
-        
-        model = sm.OLS(y, X).fit()
+        desc_stats = calculate_descriptive_stats(numeric_df)
+        corr_matrix, (pearson_corr, pearson_p), (spearman_corr, spearman_p) = calculate_correlations(numeric_df)
+        model, X_cols = run_regression_analysis(numeric_df)
+
         
         # Сохранение результатов
         save_results(desc_stats, corr_matrix, pearson_corr, pearson_p, 
