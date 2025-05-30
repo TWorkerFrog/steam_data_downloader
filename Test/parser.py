@@ -133,17 +133,13 @@ def parse_game_data(appid, name):
         
         # Основные данные
         game_data = {
-            'ID приложения': appid,
-            'Название': name,
-            'Цена (руб)': details.get('price_overview', {}).get('final', 0) / 100,
-            'Бесплатная': 'Да' if details.get('is_free', False) else 'Нет',
-            'Дата выхода': details.get('release_date', {}).get('date', 'Неизвестно'),
-            'Оценка Metacritic': score if score is not None else 'Н/Д',
-            'Рекомендации': details.get('recommendations', {}).get('total', 0),
-            'Достижения': details.get('achievements', {}).get('total', 0),
-            'Поддержка контроллеров': details.get('controller_support', 'Не указано'),
-            'Платформы': ', '.join([k for k, v in details.get('platforms', {}).items() if v])
+        'Название': name,
+        'Цена (руб)': details.get('price_overview', {}).get('final', 0),
+        'Бесплатная': 'Да' if details.get('is_free', False) else 'Нет',
+        'Оценка Metacritic': score if score is not None else 'Н/Д',
+        'Достижения': details.get('achievements', {}).get('total', 0)
         }
+
 
         steamspy_data = get_steamspy_data(appid)
         if steamspy_data:
@@ -151,7 +147,6 @@ def parse_game_data(appid, name):
                 'Положительные отзывы': steamspy_data.get('positive', 0),
                 'Отрицательные отзывы': steamspy_data.get('negative', 0),
                 'Среднее время игры (ч)': round(steamspy_data.get('average_forever', 0) / 60, 2),
-                'Медианное время игры (ч)': round(steamspy_data.get('median_forever', 0) / 60, 2),
                 'Steam рейтинг': f"{get_steam_rating(appid)}%" if get_steam_rating(appid) else 'Н/Д'
             })
 
@@ -165,11 +160,7 @@ def get_initial_game_list():
     sources = [
         ("https://steamspy.com/api.php?request=top100in2weeks", "top"),
         ("https://steamspy.com/api.php?request=top100forever", "top_all"),
-        ("https://steamspy.com/api.php?request=top100newreleases", "new"),
-        ("https://steamspy.com/api.php?request=top100owned", "owned"),
-        ("https://steamspy.com/api.php?request=top100action", "action"),
-        ("https://steamspy.com/api.php?request=top100adventure", "adventure"),
-        ("https://steamspy.com/api.php?request=top100rpg", "rpg")
+        ("https://steamspy.com/api.php?request=top100newreleases", "new")
     ]
     
     games = []
@@ -240,8 +231,8 @@ def save_to_csv(data, filename):
 
 def main():
     try:
-        print("Начинаем сбор 20 игр с оценками...")
-        games = collect_required_games(20)
+        print("Начинаем сбор 100 игр с оценками...")
+        games = collect_required_games(100)
         
         if not games:
             print("Не удалось собрать данные по играм")
